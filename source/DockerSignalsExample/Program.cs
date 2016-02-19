@@ -14,7 +14,7 @@ namespace DockerSignalsExample
 
         static bool exitSystem = false;
 
-        [DllImport("Kernel32")]
+        [DllImport("Kernel32.dll")]
         private static extern bool SetConsoleCtrlHandler(EventHandler handler, bool add);
 
         private delegate bool EventHandler(CtrlType sig);
