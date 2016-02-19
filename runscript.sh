@@ -13,6 +13,7 @@ term_handler() {
   if [ $pid -ne 0 ]; then
     echo "in term_handler"
     #kill -SIGINT "$pid"
+	rm -f /shutdown.txt
 	touch /shutdown.txt
     wait "$pid"
   fi
