@@ -18,7 +18,12 @@ namespace DockerSignalsExample
         {
             Console.WriteLine("Program start");
 
-            Console.CancelKeyPress += Console_CancelKeyPress;
+            Console.CancelKeyPress += delegate
+            {
+                Console.WriteLine("Shutdown order given.");
+                // signal threads that wait for this
+                shutdownEvent.Set();
+            };
 
             var sideThread = new Thread(LoopDateToConsole);
             sideThread.Start();
@@ -26,13 +31,6 @@ namespace DockerSignalsExample
             // wait to get signaled
             // we do it this way because this is cross-thread
             shutdownEvent.WaitOne();
-        }
-
-        private static void Console_CancelKeyPress(object sender, ConsoleCancelEventArgs e)
-        {
-            Console.WriteLine("Shutdown order given.");
-            // signal threads that wait for this
-            shutdownEvent.Set();
         }
 
         private static void LoopDateToConsole()
