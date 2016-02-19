@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -18,11 +19,20 @@ namespace DockerSignalsExample
         {
             Console.WriteLine("Program start");
 
-            Console.CancelKeyPress += delegate
+            //Console.CancelKeyPress += delegate
+            //{
+            //    Console.WriteLine("Shutdown order given.");
+            //    // signal threads that wait for this
+            //    shutdownEvent.Set();
+            //};
+
+            FileSystemWatcher shutdownFileWatcher = new FileSystemWatcher(Environment.CurrentDirectory, "shutdown.txt");
+            shutdownFileWatcher.EnableRaisingEvents = true;
+            shutdownFileWatcher.Created += (sender, e) =>
             {
-                Console.WriteLine("Shutdown order given.");
-                // signal threads that wait for this
+                Console.WriteLine("Found shutdown file");
                 shutdownEvent.Set();
+                Environment.Exit(0);
             };
 
             var sideThread = new Thread(LoopDateToConsole);
