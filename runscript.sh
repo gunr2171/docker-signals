@@ -24,6 +24,9 @@ term_handler() {
 trap 'kill ${!}; my_handler' SIGUSR1
 trap 'kill ${!}; term_handler' SIGTERM
 
+# remove shutdown file if exists
+rm -f /shutdown.txt
+
 # run application
 mono /srv/program/DockerSignalsExample.exe &
 pid="$!"
