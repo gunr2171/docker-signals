@@ -16,7 +16,7 @@ term_handler() {
 	touch /shutdown.txt
     wait "$pid"
   fi
-  exit 143; # 128 + 15 -- SIGTERM
+  exit 0; # 128 + 15 -- SIGTERM
 }
 
 # setup handlers
