@@ -11,7 +11,8 @@ my_handler() {
 # SIGTERM-handler
 term_handler() {
   if [ $pid -ne 0 ]; then
-    kill -SIGTERM "$pid"
+    echo "in term_handler"
+    kill -SIGINT "$pid"
     wait "$pid"
   fi
   exit 143; # 128 + 15 -- SIGTERM
