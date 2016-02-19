@@ -12,7 +12,8 @@ my_handler() {
 term_handler() {
   if [ $pid -ne 0 ]; then
     echo "in term_handler"
-    kill -SIGINT "$pid"
+    #kill -SIGINT "$pid"
+	touch /shutdown.txt
     wait "$pid"
   fi
   exit 143; # 128 + 15 -- SIGTERM
